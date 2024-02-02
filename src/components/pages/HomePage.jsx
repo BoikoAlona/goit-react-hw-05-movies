@@ -14,9 +14,7 @@ export const HomePage = () => {
   console.log(setQuery);
 
   useEffect(() => {
-    if (query === '') {
-      return;
-    }
+  
     const getTrandMovies = async () => {
       try {
         setStatus(STATUSES.pending);

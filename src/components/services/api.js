@@ -5,12 +5,13 @@ const API_KEY = '32341dbd589795538eacfb126ee51fa5'
 
 export const requestTrendMovies = async () => {
   const { data } = await axios.get(`${URL}trending/all/day?language=en-US&api_key=${API_KEY}`);
-  return data;
+  console.log(data);
+  return data.results;
 };
 
 export const requestMoviesByName = async () => {
   const { data } = await axios.get(`${URL}search/movie?include_adult=false&language=en-US&page=1&api_key=${API_KEY}`);
-  return data;
+  return data.results;
 };
 
 export const requestMoviesDetails = async () => {

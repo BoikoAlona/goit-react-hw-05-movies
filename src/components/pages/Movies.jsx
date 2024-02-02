@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { FilteredMovieList } from 'components/FilteredMovieList/FilteredMovieList';
+import { TrendMoviesList } from 'components/TrendMoviesList/TrendMoviesList';
 import { Searchbar } from 'components/Searchbar/Searchbar';
 import { requestMoviesByName } from 'components/services/api';
 import { Loader } from 'components/Loader/Loader';
@@ -41,7 +41,7 @@ export const Movies = () => {
       <Searchbar onSubmit={onSubmit} />
       {status === STATUSES.pending && <Loader />}
       {status === STATUSES.error && <p>ERROR{error}</p>}
-      <FilteredMovieList movies={movies} />
+      <TrendMoviesList movies={movies} />
     </div>
   );
 };

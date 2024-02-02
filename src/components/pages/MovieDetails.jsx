@@ -1,32 +1,49 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-import { FilteredMovieList } from 'components/FilteredMovieList/FilteredMovieList';
 import { requestMoviesDetails } from 'components/services/api';
 import { Loader } from 'components/Loader/Loader';
 import { STATUSES } from 'components/Utils/Constants';
 
+
+import css from 'components/App.module.css';
+
 export const MovieDetails = () => {
-  const [movies, setMovies] = useState([]);
+  const [movieDetails, setMovieDetails] = useState([]);
   const [status, setStatus] = useState(STATUSES.idle);
-  
+  const { movieId } = useParams();
 
   useEffect(() => {
-    
-    const getMovies = async () => {
+    const getMoviesDetails = async () => {
       try {
         setStatus(STATUSES.pending);
-        const detailsOfMovies = await requestMoviesDetails();
+        const movieData = await requestMoviesDetails(movieId);
         setStatus(STATUSES.success);
-        setMovies(detailsOfMovies);
-      } catch (error) { }
+        setMovieDetails(movieData);
+      } catch (error) {}
     };
-    getMovies();
+    getMoviesDetails();
   }, [movieId]);
 
-    return (
-            <div>
-                {status === STATUSES.pending && <Loader />}
-                <FilteredMovieList movies={movies} />
-            </div>
-        );
+  return (
+    <div>
+      <p>Go back</p>
+      {status === STATUSES.pending && <Loader />}
+      {status === STATUSES.success && (
+        <div>
+          <img alt={movieDetails}></img>
+          <div>
+            <p>{movieDetails}</p>
+          </div>
+          <div>
+            <h4>Additional information</h4>
+            <ul>
+              <li>Cast</li>
+              <li>Reviews</li>
+            </ul>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };

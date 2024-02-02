@@ -1,57 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import css from './App.module.css';
-import { ImageGallery } from './ImageGallery/ImageGallery';
-import { Searchbar } from 'components/Searchbar/Searchbar';
-import { Button } from 'components/Button/Button';
-import { requestImagesByQuery } from './services/api';
-import { Loader } from './Loader/Loader';
-import { STATUSES } from './Utils/Constants';
+import React from 'react';
+import { NavLink, Route, Routes } from 'react-router-dom';
 
-export const App = () => {
-  const [hits, setHits] = useState([]);
-  const [status, setStatus] = useState(STATUSES.idle);
-  const [error, setError] = useState(null);
-  const [q, setQ] = useState('');
-  const [page, setPage] = useState(1);
-  const [isLoadMore, setIsLoadMore] = useState(false);
+import { HomePage } from './pages/HomePage';
+import { Movies } from './pages/Movies';
+import { MovieDetails } from './pages/MovieDetails';
 
-  const onSubmit = q => {
-    setQ(q);
-    setPage(1);
-    setHits([]);
-    setIsLoadMore(false);
-  };
+import css from 'components/App.module.css';
 
-  useEffect(() => {
-    if (q === '' && page === 1) {
-      return;
-    }
-    const fetchImagesbyQuery = async () => {
-      try {
-        setStatus(STATUSES.pending);
-        const { hits, totalHits } = await requestImagesByQuery(q, page);
-        setStatus(STATUSES.success);
-        setHits(prevState => [...prevState, ...hits]);
-        setIsLoadMore(page < Math.ceil(totalHits / 12));
-      } catch (error) {
-        setError(error.message);
-        setStatus(STATUSES.error);
-      }
-    };
-    fetchImagesbyQuery();
-  }, [q, page]);
-
-  const onLoadMore = () => {
-    setPage(prevState => prevState + 1);
-  };
+export default function App() {
+  
 
   return (
-    <div className={css.app}>
-      <Searchbar onSubmit={onSubmit} />
-      {status === STATUSES.pending && <Loader />}
-      {status === STATUSES.error && <p>ERROR{error}</p>}
-      {hits.length > 0 && <ImageGallery hits={hits} />}
-      {isLoadMore && <Button onLoadMore={onLoadMore} />}
+    <div>
+      <header>
+        <NavLink className={({isActive}) => `${css.navLink} ${isActive ? css.active: ''}`} to="/">Home</NavLink>
+        <NavLink className={({isActive}) => `${css.navLink} ${isActive ? css.active: ''}`} to="/movies">Movies</NavLink>
+      </header>
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<Movies />} />
+          <Route path="/movies/:movieId" element={<MovieDetails />} />
+          {/* <Route path="/movies/:movieId" element={<MovieDetails />} /> */}
+        </Routes>
+      </main>
     </div>
   );
 };
