@@ -1,15 +1,16 @@
+import { Link } from 'react-router-dom';
+import { nanoid } from 'nanoid';
 import css from './TrendMoviesList.module.css';
-import { MovieItem } from 'components/MovieItem/MovieItem';
 
-export const TrendMoviesList = ({ movies, id }) => {
+export const TrendMoviesList = ({ movies }) => {
   return (
     <ul className={css.movieList}>
       {movies.map(movie => {
         return (
-          <MovieItem
-            key={movies.id}
-            movie={movies.original_title}
-          />
+          <li key={nanoid()} className={css.movieItem}>
+            <Link to={`/movies/${movie.id}`}></Link>
+            {movie.original_title}
+          </li>
         );
       })}
     </ul>
