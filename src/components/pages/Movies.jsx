@@ -14,7 +14,7 @@ export const Movies = () => {
 
   console.log(setQuery);
 
-  const onSubmit = query => {
+  const onSubmit = value => {
     setQuery(query);
   };
 

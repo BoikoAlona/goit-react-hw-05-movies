@@ -31,15 +31,26 @@ export const MovieDetails = () => {
       {status === STATUSES.pending && <Loader />}
       {status === STATUSES.success && (
         <div>
-          <img alt={movieDetails}></img>
+          <div className={css.movieDetails}>
+            <img src={movieDetails.poster_path
+              ? `https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}`
+              : <p>No image</p>} alt = { movieDetails.title || movieDetails.name } width={300}></img>
           <div>
-            <p>{movieDetails}</p>
-          </div>
+            <h2>{movieDetails.title || movieDetails.name}</h2>
+            <p>User score: {Math.round(movieDetails.vote_average*10)}%</p>
+            <h3>Overview</h3>
+            <p>{movieDetails.overview}</p>
+            <h3>Genres</h3>
+            <p>{movieDetails.genres.map(genre => {
+                return `${genre.name}  `
+              })}</p>
+            </div>
+            </div>
           <div>
             <h4>Additional information</h4>
             <ul>
-              <li>Cast</li>
-              <li>Reviews</li>
+              <li className={css.additionalInfo}>Cast</li>
+              <li className={css.additionalInfo}>Reviews</li>
             </ul>
           </div>
         </div>

@@ -8,8 +8,7 @@ export const TrendMoviesList = ({ movies }) => {
       {movies.map(movie => {
         return (
           <li key={nanoid()} className={css.movieItem}>
-            <Link to={`/movies/${movie.id}`}></Link>
-            {movie.original_title}
+            <Link to={`/movies/${movie.id}`}>{movie.title || movie.name}</Link>
           </li>
         );
       })}

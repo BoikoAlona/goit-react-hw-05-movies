@@ -21,3 +21,13 @@ header {
    background-color:antiquewhite;
    border-bottom-style:groove;
 }
+
+.movieDetails {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.additionalInfo {
+    margin-bottom: 10px;
+}
