@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
+import { NavLink, Routes, Route } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 import { requestMoviesDetails } from 'components/services/api';
 import { Loader } from 'components/Loader/Loader';
 import { STATUSES } from 'components/Utils/Constants';
+import { MovieCast } from 'components/MovieCast/MovieCast';
+import { MovieReviews } from 'components/MovieReviews/MovieReviews';
 
-
+import image from 'components/Image/vecteezy_icon-image-not-found-vector_.jpg';
 import css from 'components/App.module.css';
 
 export const MovieDetails = () => {
@@ -34,7 +37,7 @@ export const MovieDetails = () => {
           <div className={css.movieDetails}>
             <img src={movieDetails.poster_path
               ? `https://image.tmdb.org/t/p/w500/${movieDetails.poster_path}`
-              : <p>No image</p>} alt = { movieDetails.title || movieDetails.name } width={300}></img>
+              : image} alt = { movieDetails.title || movieDetails.name } width={300}></img>
           <div>
             <h2>{movieDetails.title || movieDetails.name}</h2>
             <p>User score: {Math.round(movieDetails.vote_average*10)}%</p>
@@ -48,10 +51,16 @@ export const MovieDetails = () => {
             </div>
           <div>
             <h4>Additional information</h4>
-            <ul>
-              <li className={css.additionalInfo}>Cast</li>
-              <li className={css.additionalInfo}>Reviews</li>
-            </ul>
+            <div>
+              <NavLink className={({isActive}) => `${css.navLink} ${isActive ? css.active: ''}`} to="cast" end>Cast</NavLink>
+              <NavLink className={({isActive}) => `${css.navLink} ${isActive ? css.active: ''}`} to="reviews" end>Reviews</NavLink>
+            </div>
+            <div>
+              <Routes>
+                <Route path="cast" element={<MovieCast />}></Route>
+                <Route path="reviews" element={<MovieReviews />}></Route>
+              </Routes>
+            </div>
           </div>
         </div>
       )}

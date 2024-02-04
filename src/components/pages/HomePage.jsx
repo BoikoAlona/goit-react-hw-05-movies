@@ -11,8 +11,6 @@ export const HomePage = () => {
   const [error, setError] = useState(null);
   const [query, setQuery] = useState('');
 
-  console.log(setQuery);
-
   useEffect(() => {
   
     const getTrandMovies = async () => {

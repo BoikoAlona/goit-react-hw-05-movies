@@ -10,7 +10,6 @@ export const requestTrendMovies = async () => {
 
 export const requestMoviesByName = async (value) => {
   const { data } = await axios.get(`${URL}search/movie?query=${value}&language=en-US&api_key=${API_KEY}`);
-  console.log(data.results);
   return data.results;
 };
 
@@ -20,11 +19,11 @@ export const requestMoviesDetails = async (id) => {
 };
 
 export const requestCast = async (id) => {
-  const { data } = await axios.get(`${URL}movie/${id}/credits?language=en-U&api_key=${API_KEY}`);
+  const { data } = await axios.get(`${URL}movie/${id}/credits?language=en-US&api_key=${API_KEY}`);
   return data;
 };
 
 export const requestReviews = async (id) => {
-  const { data } = await axios.get(`${URL}movie/${id}/reviews?language=en-US&page=1&api_key=${API_KEY}`);
+  const { data } = await axios.get(`${URL}movie/${id}/reviews?language=en-US&api_key=${API_KEY}`);
   return data;
 };

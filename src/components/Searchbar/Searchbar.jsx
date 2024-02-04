@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import css from './Searchbar.module.css';
+import { useSearchParams } from 'react-router-dom';
 
 export const Searchbar = ({ onSubmit }) => {
-  const [query, setQuery] = useState('');
+  const [searchParams, setSearcParams] = useSearchParams();
+
+  const query = searchParams.get('sQuery');
+
+  useEffect(() => {
+    if (query === null) return;
+    const fetchMoviesByQuery = async () => {
+  
+}
+  }, [query]);
 
   const handleSubmitForm = event => {
     event.preventDefault();
-    onSubmit(query);
-    setQuery('');
-  };
-
-  const onChange = event => {
-    setQuery(event.target.value);
+    const searchValue = event.target.value;
+    setSearcParams({sQuery: searchValue})
   };
 
   return (
@@ -28,7 +34,7 @@ export const Searchbar = ({ onSubmit }) => {
             autoComplete="off"
             autoFocus
             placeholder="Search movies"
-            onChange={onChange}
+            dafaultValue = {query}
           />
         </form>
       </header>
