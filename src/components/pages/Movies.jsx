@@ -1,47 +1,47 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
+import { requestMoviesByName } from 'components/services/api';
+import { STATUSES } from 'components/Utils/Constants';
+import { Loader } from 'components/Loader/Loader';
 import { TrendMoviesList } from 'components/TrendMoviesList/TrendMoviesList';
 import { Searchbar } from 'components/Searchbar/Searchbar';
-import { requestMoviesByName } from 'components/services/api';
-import { Loader } from 'components/Loader/Loader';
-import { STATUSES } from 'components/Utils/Constants';
 
 export const Movies = () => {
-  const [movies, setMovies] = useState([]);
   const [status, setStatus] = useState(STATUSES.idle);
   const [error, setError] = useState(null);
-  const [query, setQuery] = useState('');
+  const [movies, setMovies] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  console.log(setQuery);
+  const query = searchParams.get('query');
 
-  const onSubmit = value => {
-    setQuery(query);
+  const handleSubmitForm = value => {
+    setSearchParams({ query: value })
   };
 
   useEffect(() => {
-    if (query === '') {
-      return;
-    }
-    const getMovies = async () => {
+    if (query === null) return;
+    const fetchMoviesByQuery = async () => {
       try {
         setStatus(STATUSES.pending);
-        const filteredMovies = await requestMoviesByName();
+        const searchedMovies = await requestMoviesByName(query);
         setStatus(STATUSES.success);
-        setMovies(prevState => [...prevState, ...filteredMovies]);
-      } catch (error) {
+        setMovies(searchedMovies);
+      } catch (error){
         setError(error.message);
         setStatus(STATUSES.error);
-      }
-    };
-    getMovies();
+  }
+    }
+    fetchMoviesByQuery();
   }, [query]);
 
   return (
     <div>
-      <Searchbar onSubmit={onSubmit} />
+      <Searchbar onSubmit={handleSubmitForm} />
       {status === STATUSES.pending && <Loader />}
       {status === STATUSES.error && <p>ERROR{error}</p>}
-      <TrendMoviesList movies={movies} />
+      {movies !== null && movies.length > 0 &&
+        <TrendMoviesList movies={movies} />}
     </div>
   );
 };
