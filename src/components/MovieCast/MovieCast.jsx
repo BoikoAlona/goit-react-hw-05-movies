@@ -14,7 +14,6 @@ export const MovieCast = () => {
   const [error, setError] = useState(null);
   const { movieId } = useParams();
 
-
   useEffect(() => {
     const getCast = async () => {
       try {
@@ -31,22 +30,28 @@ export const MovieCast = () => {
   }, [movieId]);
 
   return (
-    
     <div>
       {status === STATUSES.pending && <Loader />}
       {status === STATUSES.error && <p>ERROR{error}</p>}
-        <ul className={css.castList}>
+      <ul className={css.castList}>
         {cast?.map(item => {
-                return (
-                  <li className={css.castItem} key={item.id}>
-                    <img src={item.profile_path ? `https://image.tmdb.org/t/p/w500/${item.profile_path}`
-                      : image} alt={item.original_name} width={100}></img>
-                        <p>{item.original_name}</p>
-                        <p>{item.character}</p>
-                    </li>
-                );
-            })};
-        </ul>
+          return (
+            <li className={css.castItem} key={item.id}>
+              <img
+                src={
+                  item.profile_path
+                    ? `https://image.tmdb.org/t/p/w500/${item.profile_path}`
+                    : image
+                }
+                alt={item.original_name}
+                width={100}
+              ></img>
+              <p>{item.original_name}</p>
+              <p>{item.character}</p>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };

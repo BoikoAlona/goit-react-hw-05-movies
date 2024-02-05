@@ -11,7 +11,6 @@ export const MovieReviews = () => {
   const [error, setError] = useState(null);
   const { movieId } = useParams();
 
-
   useEffect(() => {
     const getReviews = async () => {
       try {
@@ -28,24 +27,23 @@ export const MovieReviews = () => {
   }, [movieId]);
 
   if (review.length === 0) {
-             return "We don't have any reviews on this movie."
-        }
-
+    return "We don't have any reviews on this movie.";
+  }
 
   return (
     <div>
       {status === STATUSES.pending && <Loader />}
       {status === STATUSES.error && <p>ERROR{error}</p>}
-        <ul>
+      <ul>
         {review.map(item => {
-                return (
-                    <li key={item.id}>
-                        <p style={{fontWeight:'600'}}>Author: {item.author}</p>
-                        <p>{item.content}</p>
-                    </li>
-                );
-            })}
-        </ul>
+          return (
+            <li key={item.id}>
+              <p style={{ fontWeight: '600' }}>Author: {item.author}</p>
+              <p>{item.content}</p>
+            </li>
+          );
+        })}
+      </ul>
     </div>
   );
 };

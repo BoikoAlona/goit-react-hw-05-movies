@@ -5,14 +5,13 @@ import { requestTrendMovies } from 'components/services/api';
 import { Loader } from 'components/Loader/Loader';
 import { STATUSES } from 'components/Utils/Constants';
 
-export const HomePage = () => {
+const HomePage = () => {
   const [movies, setMovies] = useState([]);
   const [status, setStatus] = useState(STATUSES.idle);
   const [error, setError] = useState(null);
-  const [query, setQuery] = useState('');
+  const [query] = useState('');
 
   useEffect(() => {
-  
     const getTrandMovies = async () => {
       try {
         setStatus(STATUSES.pending);
@@ -36,3 +35,5 @@ export const HomePage = () => {
     </div>
   );
 };
+
+export default HomePage;
