@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import { requestMoviesByName } from 'components/services/api';
 import { STATUSES } from 'components/Utils/Constants';
@@ -10,14 +11,17 @@ const Movies = () => {
   const [status, setStatus] = useState(STATUSES.idle);
   const [error, setError] = useState(null);
   const [movies, setMovies] = useState(null);
-  const [query, setQuery] = useState('');
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const onSubmit = query => {
-    setQuery(query);
+  const onSubmit = event => {
+    event.preventDefault();
+    const searchValue = event.currentTarget.elements.searchInput.value;
+    setSearchParams({ query: searchValue });
   };
 
   useEffect(() => {
-    if (query === null) return;
+    const query = searchParams.get('query');
+    if (!query) return;
     const fetchMoviesByQuery = async () => {
       try {
         setStatus(STATUSES.pending);
@@ -30,7 +34,7 @@ const Movies = () => {
       }
     };
     fetchMoviesByQuery();
-  }, [query]);
+  }, [searchParams]);
 
   return (
     <div>

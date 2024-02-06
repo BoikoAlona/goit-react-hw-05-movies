@@ -9,7 +9,6 @@ const HomePage = () => {
   const [movies, setMovies] = useState([]);
   const [status, setStatus] = useState(STATUSES.idle);
   const [error, setError] = useState(null);
-  const [query] = useState('');
 
   useEffect(() => {
     const getTrandMovies = async () => {
@@ -24,7 +23,7 @@ const HomePage = () => {
       }
     };
     getTrandMovies();
-  }, [query]);
+  }, []);
 
   return (
     <div>

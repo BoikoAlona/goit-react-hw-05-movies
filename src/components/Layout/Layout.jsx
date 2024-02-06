@@ -1,9 +1,9 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 
-import css from 'components/App.module.css';
+import css from 'App.module.css';
 
-export const Layout = ({ children }) => {
+export const Layout = () => {
   return (
     <div>
       <header>
@@ -26,7 +26,7 @@ export const Layout = ({ children }) => {
           Movies
         </NavLink>
       </header>
-      <main>{children}</main>
+      <main><Outlet /></main>
     </div>
   );
 };

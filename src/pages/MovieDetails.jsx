@@ -1,15 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { NavLink, Routes, Route, useLocation, Link } from 'react-router-dom';
+import { NavLink, useLocation, Link, Outlet } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
 import { requestMoviesDetails } from 'components/services/api';
 import { Loader } from 'components/Loader/Loader';
 import { STATUSES } from 'components/Utils/Constants';
-import { MovieCast } from 'components/MovieCast/MovieCast';
-import { MovieReviews } from 'components/MovieReviews/MovieReviews';
 
 import image from 'components/Image/vecteezy_icon-image-not-found-vector_.jpg';
-import css from 'components/App.module.css';
+import css from 'App.module.css';
 
 const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState([]);
@@ -82,10 +80,7 @@ const MovieDetails = () => {
               </NavLink>
             </div>
             <div>
-              <Routes>
-                <Route path="cast" element={<MovieCast />}></Route>
-                <Route path="reviews" element={<MovieReviews />}></Route>
-              </Routes>
+              <Outlet/>
             </div>
           </div>
         </div>
