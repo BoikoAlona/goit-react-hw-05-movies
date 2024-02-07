@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
 import css from 'App.module.css';
+import { Loader } from 'components/Loader/Loader';
 
 export const Layout = () => {
   return (
@@ -26,7 +27,11 @@ export const Layout = () => {
           Movies
         </NavLink>
       </header>
-      <main><Outlet /></main>
+      <main>
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
+      </main>
     </div>
   );
 };
